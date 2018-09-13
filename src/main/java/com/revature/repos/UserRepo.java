@@ -15,5 +15,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	List<User> findByMoviesId(int id);
 
 	List<BasicUserProjection> findAllProjectedBy();
+	
+	
+	
 
 }
