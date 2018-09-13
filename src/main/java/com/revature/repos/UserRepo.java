@@ -1,5 +1,5 @@
 package com.revature.repos;
-
+import com.revature.model.Team;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +12,5 @@ import com.revature.model.User;
 public interface UserRepo extends JpaRepository<User, Integer> {
 	User findByUsernameAndPassword(String username, String password);	
 	List<Team> findByUserId(int id); 
-
 }
+
