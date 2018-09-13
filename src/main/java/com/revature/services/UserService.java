@@ -18,11 +18,10 @@ public class UserService {
 	private UserRepo ur;
 
 	public List<User> findAll() {
-		return ur.findAllProjectedBy();
+		return ur.findAll();
 	}
 
-	@Transactional(propagation = Propagation.MANDATORY)
-	public User findOne(int id) {
+/**	public User findOne(int id) {
 		User u = ur.getOne(id);
 		return u;
 	}
@@ -33,5 +32,5 @@ public class UserService {
 
 	public List<Team> findByUserId(int id) {
 		return ur.findByUserId(id);
-	}
-}
+	} */
+} 

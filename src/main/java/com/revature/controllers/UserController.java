@@ -2,8 +2,6 @@ package com.revature.controllers;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +30,7 @@ public class UserController {
 		return us.findAll();
 	}
 
-	// /users/:id
-	@Transactional
+	/** // /users/:id
 	@GetMapping("{id}")
 	public User findById(@PathVariable int id) {
 		User user = us.findOne(id);
@@ -56,6 +53,6 @@ public class UserController {
 	public User findTeamsById(@PathVariable int id) {
 		User user = us.findOne(id);
 		return user;
-	}
+	}*/
 
 }

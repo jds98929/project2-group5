@@ -10,7 +10,7 @@ import com.revature.model.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {
-	User findByUsernameAndPassword(String username, String password);	
-	List<Team> findByUserId(int id);
+	/** User findByUsernameAndPassword(String username, String password);	
+	List<Team> findByUserId(int id); */
 
 }
