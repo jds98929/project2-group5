@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name="user")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,7 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 	@ManyToMany
-	@JoinTable(name = "users_teams", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+	@JoinTable(name = "users_tables", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
 	private List<Team> teams;
 	public User() {
 		super();
