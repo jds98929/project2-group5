@@ -4,113 +4,90 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
-@Table(name = "app_users")
-public class AppUser {
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private int id;
+	private int id;			
 	private String username;
 	private String password;
-	private String role;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "users_movies", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
-	private List<Movie> movies;
-
-	@OneToMany(mappedBy = "owner", fetch=FetchType.EAGER)
-	private List<Account> accounts;
-
-	public AppUser() {
+	@Column(name = "first_name")
+	private String firstName;
+	@Column(name = "last_name")
+	private String lastName;
+	@ManyToMany
+	@JoinTable(name = "users_teams", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+	private List<Team> teams;
+	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public AppUser(int id, String username, String password, String role, List<Movie> movies, List<Account> accounts) {
+	public User(int id, String username, String password, String firstName, String lastName, List<Team> teams) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.role = role;
-		this.movies = movies;
-		this.accounts = accounts;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.teams = teams;
 	}
-
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getRole() {
-		return role;
+	public String getFirstName() {
+		return firstName;
 	}
-
-	public void setRole(String role) {
-		this.role = role;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-
-	public List<Movie> getMovies() {
-		return movies;
+	public String getLastName() {
+		return lastName;
 	}
-
-	public void setMovies(List<Movie> movies) {
-		this.movies = movies;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-
-	public List<Account> getAccounts() {
-		return accounts;
+	public List<Team> getTeams() {
+		return teams;
 	}
-
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
+	public void setTeams(List<Team> teams) {
+		this.teams = teams;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((accounts == null) ? 0 : accounts.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((movies == null) ? 0 : movies.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((teams == null) ? 0 : teams.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -119,28 +96,28 @@ public class AppUser {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AppUser other = (AppUser) obj;
-		if (accounts == null) {
-			if (other.accounts != null)
+		User other = (User) obj;
+		if (firstName == null) {
+			if (other.firstName != null)
 				return false;
-		} else if (!accounts.equals(other.accounts))
+		} else if (!firstName.equals(other.firstName))
 			return false;
 		if (id != other.id)
 			return false;
-		if (movies == null) {
-			if (other.movies != null)
+		if (lastName == null) {
+			if (other.lastName != null)
 				return false;
-		} else if (!movies.equals(other.movies))
+		} else if (!lastName.equals(other.lastName))
 			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (role == null) {
-			if (other.role != null)
+		if (teams == null) {
+			if (other.teams != null)
 				return false;
-		} else if (!role.equals(other.role))
+		} else if (!teams.equals(other.teams))
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -149,11 +126,10 @@ public class AppUser {
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
-		return "AppUser [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
-				+ ", movies=" + movies + ", accounts=" + accounts + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", teams=" + teams + "]";
 	}
 
 }

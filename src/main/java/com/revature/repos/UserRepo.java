@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.revature.model.AppUser;
+import com.revature.model.User;
 import com.revature.projections.BasicUserProjection;
 
 @Repository
-public interface UserRepo extends JpaRepository<AppUser, Integer> {
+public interface UserRepo extends JpaRepository<User, Integer> {
 	BasicUserProjection findByUsernameAndPassword(String username, String password);
 
-	List<AppUser> findByMoviesId(int id);
+	List<User> findByMoviesId(int id);
 
 	List<BasicUserProjection> findAllProjectedBy();
 

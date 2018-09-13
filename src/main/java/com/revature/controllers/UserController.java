@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.dto.Credential;
-import com.revature.model.AppUser;
+import com.revature.model.User;
 import com.revature.projections.BasicUserProjection;
 import com.revature.services.UserService;
 
@@ -36,16 +36,15 @@ public class UserController {
 	// /users/:id
 	@Transactional
 	@GetMapping("{id}")
-	public AppUser findById(@PathVariable int id) {
-		AppUser user = us.findOne(id);
-		user.setRole("Admin!!!");
+	public User findById(@PathVariable int id) {
+		User user = us.findOne(id);
 		return user;
 	}
 
 	@PostMapping
-	public ResponseEntity<AppUser> save(@RequestBody AppUser u) {
+	public ResponseEntity<User> save(@RequestBody User u) {
 		u.setId(1);
-		ResponseEntity<AppUser> re = new ResponseEntity<AppUser>(u, HttpStatus.CREATED);
+		ResponseEntity<User> re = new ResponseEntity<User>(u, HttpStatus.CREATED);
 		return re;
 	}
 
@@ -56,7 +55,7 @@ public class UserController {
 	}
 
 	@GetMapping("movies/{id}")
-	public List<AppUser> usersThatLikeMovieWithId(@PathVariable int id) {
+	public List<User> usersThatLikeMovieWithId(@PathVariable int id) {
 		return us.findByMoviesId(id);
 	}
 

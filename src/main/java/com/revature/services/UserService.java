@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.model.AppUser;
+import com.revature.model.User;
 import com.revature.projections.BasicUserProjection;
 import com.revature.repos.UserRepo;
 
@@ -22,8 +22,8 @@ public class UserService {
 	}
 
 	@Transactional(propagation = Propagation.MANDATORY)
-	public AppUser findOne(int id) {
-		AppUser u = ur.getOne(id);
+	public User findOne(int id) {
+		User u = ur.getOne(id);
 		return u;
 	}
 
@@ -31,7 +31,7 @@ public class UserService {
 		return ur.findByUsernameAndPassword(username, password);
 	}
 
-	public List<AppUser> findByMoviesId(int id) {
+	public List<User> findByMoviesId(int id) {
 		return ur.findByMoviesId(id);
 	}
 }
