@@ -30,7 +30,7 @@ public class UserController {
 		return us.findAll();
 	}
 
-	/** // /users/:id
+	// /users/:id
 	@GetMapping("{id}")
 	public User findById(@PathVariable int id) {
 		User user = us.findOne(id);
@@ -53,6 +53,6 @@ public class UserController {
 	public User findTeamsById(@PathVariable int id) {
 		User user = us.findOne(id);
 		return user;
-	}*/
+	}
 
 }
