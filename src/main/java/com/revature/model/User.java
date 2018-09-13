@@ -17,7 +17,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private int id;			
+	private int userId;			
 	private String username;
 	private String password;
 	@Column(name = "first_name")
@@ -31,9 +31,9 @@ public class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(int id, String username, String password, String firstName, String lastName, List<Team> teams) {
+	public User(int userId, String username, String password, String firstName, String lastName, List<Team> teams) {
 		super();
-		this.id = id;
+		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -41,10 +41,10 @@ public class User {
 		this.teams = teams;
 	}
 	public int getId() {
-		return id;
+		return userId;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.userId = id;
 	}
 	public String getUsername() {
 		return username;
@@ -81,7 +81,7 @@ public class User {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + id;
+		result = prime * result + userId;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((teams == null) ? 0 : teams.hashCode());
@@ -102,7 +102,7 @@ public class User {
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (id != other.id)
+		if (userId != other.userId)
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
@@ -128,7 +128,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+		return "User [id=" + userId + ", username=" + username + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", teams=" + teams + "]";
 	}
 

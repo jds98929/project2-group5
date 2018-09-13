@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.dto.Credential;
 import com.revature.model.User;
-import com.revature.projections.BasicUserProjection;
 import com.revature.services.UserService;
 
 @RestController
@@ -28,7 +27,7 @@ public class UserController {
 
 	// /users
 	@GetMapping
-	public List<BasicUserProjection> findAll() {
+	public List<User> findAll() {
 		System.out.println("finding all users");
 		return us.findAll();
 	}
@@ -43,20 +42,20 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody User u) {
-		u.setId(1);
 		ResponseEntity<User> re = new ResponseEntity<User>(u, HttpStatus.CREATED);
 		return re;
 	}
 
 	@PostMapping("login")
-	public BasicUserProjection login(@RequestBody Credential u) {
+	public User login(@RequestBody Credential u) {
 
 		return us.login(u.getUsername(), u.getPassword());
 	}
 
-	@GetMapping("movies/{id}")
-	public List<User> usersThatLikeMovieWithId(@PathVariable int id) {
-		return us.findByMoviesId(id);
+	@GetMapping("{id}/teams")
+	public User findTeamsById(@PathVariable int id) {
+		User user = us.findOne(id);
+		return user;
 	}
 
 }

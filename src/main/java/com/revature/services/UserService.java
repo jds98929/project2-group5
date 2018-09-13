@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.model.Team;
 import com.revature.model.User;
-import com.revature.projections.BasicUserProjection;
 import com.revature.repos.UserRepo;
 
 @Service
@@ -17,7 +17,7 @@ public class UserService {
 	@Autowired
 	private UserRepo ur;
 
-	public List<BasicUserProjection> findAll() {
+	public List<User> findAll() {
 		return ur.findAllProjectedBy();
 	}
 
@@ -27,11 +27,11 @@ public class UserService {
 		return u;
 	}
 
-	public BasicUserProjection login(String username, String password) {
+	public User login(String username, String password) {
 		return ur.findByUsernameAndPassword(username, password);
 	}
 
-	public List<User> findByMoviesId(int id) {
-		return ur.findByMoviesId(id);
+	public List<Team> findByUserId(int id) {
+		return ur.findByUserId(id);
 	}
 }
