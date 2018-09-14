@@ -1,4 +1,4 @@
-package com.project.Home.dto;
+package com.revature.dto;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.project.Home.dto;
+package com.revature.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
