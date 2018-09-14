@@ -32,6 +32,7 @@ public class UserService {
 		Team t = tr.findByName(teamName);
 		User u = ur.getOne(id);
 		u.getTeams().add(t);
+		ur.saveAndFlush(u);
 		return u;
 	}
 	

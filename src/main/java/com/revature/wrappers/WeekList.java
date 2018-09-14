@@ -3,7 +3,7 @@ package com.revature.wrappers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.project.Home.dto.Week;
+import com.revature.dto.Week;
 
 public class WeekList {
 	 private List<Week> weeks;

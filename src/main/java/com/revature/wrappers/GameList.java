@@ -3,7 +3,7 @@ package com.revature.wrappers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.project.Home.dto.Game;
+import com.revature.dto.Game;
 
 public class GameList {
 	private List<Game> games;
