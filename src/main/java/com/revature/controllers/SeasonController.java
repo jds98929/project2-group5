@@ -13,12 +13,12 @@ import com.revature.dto.Season;
 public class SeasonController {
 	
 	@GetMapping
-	public String getSeason() {
+	public Season getSeason() {
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
 				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/03/schedule.json?api_key=2czvbmnr5ghwva9y8hbwh92w", Season.class);
-		System.out.println("received id field: " + season.getBody().getId());
+		System.out.println("received id field: " + season.getBody());
 		
-		return season.getBody().getId();
+		return season.getBody();
 	}
 }

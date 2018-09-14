@@ -1,22 +1,14 @@
 package com.revature.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-
-public class Team {
-	private int id;
+public class Home {
+	private String id;
 	private String name;
 	private String alias;
-	public Team() {
+	public Home() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Team(int id, String name, String alias) {
+	public Home(String id, String name, String alias) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,13 +17,13 @@ public class Team {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	/**
@@ -66,7 +58,7 @@ public class Team {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((alias == null) ? 0 : alias.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -81,7 +73,7 @@ public class Team {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Team other = (Team) obj;
+		Home other = (Home) obj;
 		if (alias == null) {
 			if (other.alias != null)
 				return false;

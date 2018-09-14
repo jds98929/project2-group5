@@ -1,41 +1,38 @@
 package com.revature.dto;
 
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 public class Game {
-	private int id;
+	private String id;
 	private int number;
 	private String scheduled;
-	private List<Team> opponents;
+	private Home home;
+	private Away away;
+	private Scoring scoring;
+	private Broadcast broadcast;
 	public Game() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Game(int id, int number, String scheduled, List<Team> opponents) {
+	public Game(String id, int number, String scheduled, Home home, Away away, Scoring scoring, Broadcast broadcast) {
 		super();
 		this.id = id;
 		this.number = number;
 		this.scheduled = scheduled;
-		this.opponents = opponents;
+		this.home = home;
+		this.away = away;
+		this.scoring = scoring;
+		this.broadcast = broadcast;
 	}
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	/**
@@ -63,16 +60,52 @@ public class Game {
 		this.scheduled = scheduled;
 	}
 	/**
-	 * @return the opponents
+	 * @return the home
 	 */
-	public List<Team> getOpponents() {
-		return opponents;
+	public Home getHome() {
+		return home;
 	}
 	/**
-	 * @param opponents the opponents to set
+	 * @param home the home to set
 	 */
-	public void setOpponents(List<Team> opponents) {
-		this.opponents = opponents;
+	public void setHome(Home home) {
+		this.home = home;
+	}
+	/**
+	 * @return the away
+	 */
+	public Away getAway() {
+		return away;
+	}
+	/**
+	 * @param away the away to set
+	 */
+	public void setAway(Away away) {
+		this.away = away;
+	}
+	/**
+	 * @return the scores
+	 */
+	public Scoring getScoring() {
+		return scoring;
+	}
+	/**
+	 * @param scores the scores to set
+	 */
+	public void setScoring(Scoring scoring) {
+		this.scoring = scoring;
+	}
+	/**
+	 * @return the network
+	 */
+	public Broadcast getBroadcast() {
+		return broadcast;
+	}
+	/**
+	 * @param network the network to set
+	 */
+	public void setBroadcast(Broadcast broadcast) {
+		this.broadcast = broadcast;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -81,10 +114,13 @@ public class Game {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((away == null) ? 0 : away.hashCode());
+		result = prime * result + ((home == null) ? 0 : home.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((broadcast == null) ? 0 : broadcast.hashCode());
 		result = prime * result + number;
-		result = prime * result + ((opponents == null) ? 0 : opponents.hashCode());
 		result = prime * result + ((scheduled == null) ? 0 : scheduled.hashCode());
+		result = prime * result + ((scoring == null) ? 0 : scoring.hashCode());
 		return result;
 	}
 	/* (non-Javadoc)
@@ -99,19 +135,37 @@ public class Game {
 		if (getClass() != obj.getClass())
 			return false;
 		Game other = (Game) obj;
-		if (id != other.id)
+		if (away == null) {
+			if (other.away != null)
+				return false;
+		} else if (!away.equals(other.away))
+			return false;
+		if (home == null) {
+			if (other.home != null)
+				return false;
+		} else if (!home.equals(other.home))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (broadcast == null) {
+			if (other.broadcast != null)
+				return false;
+		} else if (!broadcast.equals(other.broadcast))
 			return false;
 		if (number != other.number)
-			return false;
-		if (opponents == null) {
-			if (other.opponents != null)
-				return false;
-		} else if (!opponents.equals(other.opponents))
 			return false;
 		if (scheduled == null) {
 			if (other.scheduled != null)
 				return false;
 		} else if (!scheduled.equals(other.scheduled))
+			return false;
+		if (scoring == null) {
+			if (other.scoring != null)
+				return false;
+		} else if (!scoring.equals(other.scoring))
 			return false;
 		return true;
 	}
@@ -120,7 +174,8 @@ public class Game {
 	 */
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", number=" + number + ", scheduled=" + scheduled + ", opponents=" + opponents + "]";
+		return "Game [id=" + id + ", number=" + number + ", scheduled=" + scheduled + ", home=" + home + ", away="
+				+ away + ", scoring=" + scoring + ", broadcast=" + broadcast + "]";
 	}
 	
 }

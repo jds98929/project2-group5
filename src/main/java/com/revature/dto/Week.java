@@ -2,15 +2,8 @@ package com.revature.dto;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 public class Week {
-	private int id;
+	private String id;
 	private int sequence;
 	private String title;
 	private List<Game> games;
@@ -18,7 +11,7 @@ public class Week {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Week(int id, int sequence, String title, List<Game> games) {
+	public Week(String id, int sequence, String title, List<Game> games) {
 		super();
 		this.id = id;
 		this.sequence = sequence;
@@ -28,13 +21,13 @@ public class Week {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	/**
@@ -81,7 +74,7 @@ public class Week {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((games == null) ? 0 : games.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + sequence;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
