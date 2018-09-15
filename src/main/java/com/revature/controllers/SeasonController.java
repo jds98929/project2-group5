@@ -18,7 +18,7 @@ import com.revature.dto.Week;
 import com.revature.services.SeasonService;
 @RestController
 @RequestMapping("season")
-public class SeasonController {
+public class SeasonController extends Thread{
 	@Autowired
 	private SeasonService us;
 	@GetMapping
@@ -50,10 +50,16 @@ public class SeasonController {
 			}
 		}
 		String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/" + game.getId() + "/statistics.json?api_key=2czvbmnr5ghwva9y8hbwh92w";
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    ResponseEntity<Object> gameStats = rt.getForEntity
 				(url, Object.class);
 
-		return gameStats; 
+		return gameStats;
 	}
 
 	@GetMapping("{teamAlias}/{weekNumber}/roster")
