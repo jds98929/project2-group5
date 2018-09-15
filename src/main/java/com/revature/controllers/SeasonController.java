@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.dto.Game;
+import com.revature.dto.GameStats;
 import com.revature.dto.Player;
 import com.revature.dto.Roster;
+import com.revature.dto.Schedule;
 import com.revature.dto.Season;
 import com.revature.dto.Week;
 import com.revature.services.SeasonService;
 @RestController
+@JsonIgnoreProperties(ignoreUnknown = true)
 @RequestMapping("season")
 @CrossOrigin(origins = "http://localhost:3001")
 public class SeasonController extends Thread{
@@ -33,7 +37,7 @@ public class SeasonController extends Thread{
 		return season.getBody();
 	}
 	@GetMapping("{teamAlias}/{weekNumber}/schedule")
-	public Object getTeamScheduleByWeek(@PathVariable String teamAlias, @PathVariable String weekNumber) {
+	public Schedule getTeamScheduleByWeek(@PathVariable String teamAlias, @PathVariable String weekNumber) {
 		Game game = new Game();
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
@@ -58,10 +62,10 @@ public class SeasonController extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    ResponseEntity<Object> gameStats = rt.getForEntity
-				(url, Object.class);
-
-		return gameStats;
+	    ResponseEntity<GameStats> gameStats = rt.getForEntity
+				(url, GameStats.class);
+	    Schedule schedule = new Schedule(game, gameStats.getBody());
+		return schedule;
 	}
 
 	@GetMapping("{teamAlias}/{weekNumber}/roster")
@@ -90,10 +94,11 @@ public class SeasonController extends Thread{
 								(url, Roster.class);
 						List<Player> pl = roster.getBody().getHome().getPlayers();
 				        System.out.println("Result : status ("+ roster.getStatusCode() + ") has body: " + roster.hasBody());						
-				        return pl;
+				        return pl; 
 						}catch(Exception e) {
 							System.out.println("Exception : "+ e);
-						}
+						} 
+						
 					}
 				}	
 			}
