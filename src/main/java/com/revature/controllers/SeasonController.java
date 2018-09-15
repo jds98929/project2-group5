@@ -29,7 +29,8 @@ public class SeasonController {
 	}
 	
 	@GetMapping("{teamAlias}/{weekNumber}/schedule")
-	public Game getTeamScheduleByWeek(@PathVariable String teamAlias, @PathVariable String weekNumber) {
+	public Object getTeamScheduleByWeek(@PathVariable String teamAlias, @PathVariable String weekNumber) {
+		Game game = new Game();
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
 				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=2czvbmnr5ghwva9y8hbwh92w", Season.class);
@@ -41,12 +42,15 @@ public class SeasonController {
 				List<Game> games = w.getGames();
 				for (Game g : games) {
 					if (g.getHome().getAlias().equals(teamAlias) || g.getAway().getAlias().equals(teamAlias)) {
-						return g;
+						game = g;
 					}
 				}
 			}
-		
-		
-		return null;
+		}
+		String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/" + game.getId() + "/statistics.json?api_key=2czvbmnr5ghwva9y8hbwh92w";
+	    ResponseEntity<Object> gameStats = rt.getForEntity
+				(url, Object.class);
+
+		return gameStats; 
 	}
 }
