@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.revature.dto.Week;
 import com.revature.services.SeasonService;
 @RestController
 @RequestMapping("season")
+@CrossOrigin(origins = "http://localhost:3000")
 public class SeasonController {
 	@Autowired
 	private SeasonService us;
@@ -65,6 +67,12 @@ public class SeasonController {
 					if (g.getHome().getAlias().equals(teamAlias) || g.getAway().getAlias().equals(teamAlias)) {
 						String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/"+ g.getId()+"/roster.json?api_key=2czvbmnr5ghwva9y8hbwh92w";
 						System.out.println(url);
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						try {
 						RestTemplate restTemplate = new RestTemplate();
 						ResponseEntity<Roster> roster = restTemplate.getForEntity
