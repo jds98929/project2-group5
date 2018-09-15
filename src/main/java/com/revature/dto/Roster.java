@@ -1,32 +1,16 @@
 package com.revature.dto;
 
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-
-public class Game {
+public class Roster {
 	private String id;
-	private int number;
-	private String scheduled;
 	private Home home;
 	private Away away;
-	//private Scoring scoring;
-	//private Broadcast broadcast;
-	public Game() {
+	public Roster() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Game(String id, int number, String scheduled, Home home, Away away) {
+	public Roster(String id, Home home, Away away) {
 		super();
 		this.id = id;
-		this.number = number;
-		this.scheduled = scheduled;
 		this.home = home;
 		this.away = away;
 	}
@@ -35,18 +19,6 @@ public class Game {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public int getNumber() {
-		return number;
-	}
-	public void setNumber(int number) {
-		this.number = number;
-	}
-	public String getScheduled() {
-		return scheduled;
-	}
-	public void setScheduled(String scheduled) {
-		this.scheduled = scheduled;
 	}
 	public Home getHome() {
 		return home;
@@ -67,8 +39,6 @@ public class Game {
 		result = prime * result + ((away == null) ? 0 : away.hashCode());
 		result = prime * result + ((home == null) ? 0 : home.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + number;
-		result = prime * result + ((scheduled == null) ? 0 : scheduled.hashCode());
 		return result;
 	}
 	@Override
@@ -79,7 +49,7 @@ public class Game {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Game other = (Game) obj;
+		Roster other = (Roster) obj;
 		if (away == null) {
 			if (other.away != null)
 				return false;
@@ -95,19 +65,11 @@ public class Game {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (number != other.number)
-			return false;
-		if (scheduled == null) {
-			if (other.scheduled != null)
-				return false;
-		} else if (!scheduled.equals(other.scheduled))
-			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", number=" + number + ", scheduled=" + scheduled + ", home=" + home + ", away="
-				+ away + "]";
+		return "Roster [id=" + id + ", home=" + home + ", away=" + away + "]";
 	}
 	
 }
