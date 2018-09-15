@@ -2,13 +2,6 @@ package com.revature.dto;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 public class Season {
 	private String id;
 	private int year;

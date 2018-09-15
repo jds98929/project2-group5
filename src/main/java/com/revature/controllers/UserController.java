@@ -2,6 +2,8 @@ package com.revature.controllers;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,13 @@ public class UserController {
 	public User findById(@PathVariable int id) {
 		User user = us.findOne(id);
 		return user;
+	}
+	
+	@Transactional
+	@GetMapping("/{id}/{teamName}")
+	public User newTeam(@PathVariable int id, @PathVariable String teamName) {
+		User u = us.updateUserTeams(id, teamName);
+		return u;
 	}
 
 	@PostMapping

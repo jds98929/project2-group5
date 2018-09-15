@@ -49,6 +49,7 @@ public class Home {
 		result = prime * result + ((alias == null) ? 0 : alias.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((players == null) ? 0 : players.hashCode());
 		return result;
 	}
 	@Override
@@ -75,11 +76,15 @@ public class Home {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (players == null) {
+			if (other.players != null)
+				return false;
+		} else if (!players.equals(other.players))
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "Home [id=" + id + ", name=" + name + ", alias=" + alias + "]";
+		return "Home [id=" + id + ", name=" + name + ", alias=" + alias + ", players=" + players + "]";
 	}
-	
 }

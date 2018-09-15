@@ -1,4 +1,5 @@
 package com.revature.dto;
+
 import java.util.List;
 
 public class Away {
