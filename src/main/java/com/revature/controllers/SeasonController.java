@@ -17,13 +17,14 @@ import com.revature.dto.GameStats;
 import com.revature.dto.Player;
 import com.revature.dto.Roster;
 import com.revature.dto.Schedule;
+import com.revature.dto.Scoring;
 import com.revature.dto.Season;
 import com.revature.dto.Week;
 import com.revature.services.SeasonService;
 @RestController
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RequestMapping("season")
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 public class SeasonController extends Thread{
 	@Autowired
 	private SeasonService us;
@@ -38,6 +39,7 @@ public class SeasonController extends Thread{
 	}
 	@GetMapping("{teamAlias}/{weekNumber}/schedule")
 	public Schedule getTeamScheduleByWeek(@PathVariable String teamAlias, @PathVariable String weekNumber) {
+		Schedule schedule = new Schedule();
 		Game game = new Game();
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
@@ -51,6 +53,7 @@ public class SeasonController extends Thread{
 				for (Game g : games) {
 					if (g.getHome().getAlias().equals(teamAlias) || g.getAway().getAlias().equals(teamAlias)) {
 						game = g;
+						schedule.setG(game);
 					}
 				}
 			}
@@ -64,7 +67,7 @@ public class SeasonController extends Thread{
 		}
 	    ResponseEntity<GameStats> gameStats = rt.getForEntity
 				(url, GameStats.class);
-	    Schedule schedule = new Schedule(game, gameStats.getBody());
+	    schedule.setGs(gameStats.getBody());
 		return schedule;
 	}
 

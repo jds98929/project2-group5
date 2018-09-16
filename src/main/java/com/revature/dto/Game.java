@@ -16,19 +16,20 @@ public class Game {
 	private String scheduled;
 	private Home home;
 	private Away away;
-	//private Scoring scoring;
+	private Scoring scoring;
 	//private Broadcast broadcast;
 	public Game() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Game(String id, int number, String scheduled, Home home, Away away) {
+	public Game(String id, int number, String scheduled, Home home, Away away, Scoring scoring) {
 		super();
 		this.id = id;
 		this.number = number;
 		this.scheduled = scheduled;
 		this.home = home;
 		this.away = away;
+		this.scoring = scoring;
 	}
 	public String getId() {
 		return id;
@@ -60,6 +61,12 @@ public class Game {
 	public void setAway(Away away) {
 		this.away = away;
 	}
+	public Scoring getScoring() {
+		return scoring;
+	}
+	public void setScoring(Scoring scoring) {
+		this.scoring = scoring;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -69,6 +76,7 @@ public class Game {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + number;
 		result = prime * result + ((scheduled == null) ? 0 : scheduled.hashCode());
+		result = prime * result + ((scoring == null) ? 0 : scoring.hashCode());
 		return result;
 	}
 	@Override
@@ -102,12 +110,17 @@ public class Game {
 				return false;
 		} else if (!scheduled.equals(other.scheduled))
 			return false;
+		if (scoring == null) {
+			if (other.scoring != null)
+				return false;
+		} else if (!scoring.equals(other.scoring))
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
 		return "Game [id=" + id + ", number=" + number + ", scheduled=" + scheduled + ", home=" + home + ", away="
-				+ away + "]";
+				+ away + ", scoring=" + scoring + "]";
 	}
 	
 }
