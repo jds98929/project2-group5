@@ -70,7 +70,21 @@ public class SeasonController extends Thread{
 	    schedule.setGs(gameStats.getBody());
 		return schedule;
 	}
-
+	@GetMapping ("week/{weekNumber}")
+	public List<Game> getGames(@PathVariable String weekNumber) {
+		RestTemplate rt = new RestTemplate();
+		ResponseEntity<Season> season = rt.getForEntity
+				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=2czvbmnr5ghwva9y8hbwh92w", Season.class);
+		System.out.println("received id field: " + season.getBody());
+		List<Week> weeks = season.getBody().getWeeks();
+		for (Week w: weeks) {
+			if (w.getTitle().equals(weekNumber)) {
+				return w.getGames();
+			}
+		}
+				
+		return null;
+	}
 	@GetMapping("{teamAlias}/{weekNumber}/roster")
 	public List<Player> getRosterByWeek(@PathVariable String teamAlias, @PathVariable String weekNumber) {
 		RestTemplate rt = new RestTemplate();
