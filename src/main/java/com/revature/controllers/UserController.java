@@ -19,7 +19,7 @@ import com.revature.dto.Credential;
 import com.revature.model.User;
 import com.revature.services.UserService;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("users")
 public class UserController {

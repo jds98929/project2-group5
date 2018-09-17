@@ -48,9 +48,9 @@ public class SeasonController extends Thread{
 		List<Week> weeks = season.getBody().getWeeks();
 		for (Week w: weeks) {
 			if (w.getTitle().equals(weekNumber)) {
-				//System.out.println("WEEK");
 				List<Game> games = w.getGames();
 				for (Game g : games) {
+					System.out.println(g.getHome().getAlias());
 					if (g.getHome().getAlias().equals(teamAlias) || g.getAway().getAlias().equals(teamAlias)) {
 						game = g;
 						schedule.setG(game);

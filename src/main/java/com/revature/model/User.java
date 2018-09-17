@@ -27,7 +27,7 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 	@ManyToMany
-	@JoinTable(name = "users_tables", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+	@JoinTable(name = "users_teams", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
 	private List<Team> teams;
 	public User() {
 		super();

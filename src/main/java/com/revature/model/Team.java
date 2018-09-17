@@ -15,16 +15,16 @@ public class Team {
 	@Column(name="team_id")
 	private int id;
 	private String name;
-	private String logo;
+	private String alias;
 	public Team() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Team(int id, String name, String logo) {
+	public Team(int id, String name, String alias) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.logo = logo;
+		this.alias = alias;
 	}
 	public int getId() {
 		return id;
@@ -38,18 +38,18 @@ public class Team {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getLogo() {
-		return logo;
+	public String getAlias() {
+		return alias;
 	}
-	public void setLogo(String logo) {
-		this.logo = logo;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((alias == null) ? 0 : alias.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((logo == null) ? 0 : logo.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -62,12 +62,12 @@ public class Team {
 		if (getClass() != obj.getClass())
 			return false;
 		Team other = (Team) obj;
-		if (id != other.id)
-			return false;
-		if (logo == null) {
-			if (other.logo != null)
+		if (alias == null) {
+			if (other.alias != null)
 				return false;
-		} else if (!logo.equals(other.logo))
+		} else if (!alias.equals(other.alias))
+			return false;
+		if (id != other.id)
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -78,7 +78,8 @@ public class Team {
 	}
 	@Override
 	public String toString() {
-		return "Team [id=" + id + ", name=" + name + ", logo=" + logo + "]";
+		return "Team [id=" + id + ", name=" + name + ", alias=" + alias + "]";
 	}
+
 	
 }
