@@ -26,13 +26,14 @@ import com.revature.services.SeasonService;
 @RequestMapping("season")
 @CrossOrigin(origins = "http://localhost:3000")
 public class SeasonController extends Thread{
+	static String key = "mzgx958n3fyxn6nvpg82r5jb";
 	@Autowired
 	private SeasonService us;
 	@GetMapping
 	public Season getSeason() {
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
-				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=2czvbmnr5ghwva9y8hbwh92w", Season.class);
+				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=" + key, Season.class);
 		System.out.println("received id field: " + season.getBody());
 		
 		return season.getBody();
@@ -43,14 +44,13 @@ public class SeasonController extends Thread{
 		Game game = new Game();
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
-				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=2czvbmnr5ghwva9y8hbwh92w", Season.class);
+				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=" + key, Season.class);
 		System.out.println("received id field: " + season.getBody());
 		List<Week> weeks = season.getBody().getWeeks();
 		for (Week w: weeks) {
 			if (w.getTitle().equals(weekNumber)) {
 				List<Game> games = w.getGames();
 				for (Game g : games) {
-					System.out.println(g.getHome().getAlias());
 					if (g.getHome().getAlias().equals(teamAlias) || g.getAway().getAlias().equals(teamAlias)) {
 						game = g;
 						schedule.setG(game);
@@ -58,7 +58,7 @@ public class SeasonController extends Thread{
 				}
 			}
 		}
-		String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/" + game.getId() + "/statistics.json?api_key=2czvbmnr5ghwva9y8hbwh92w";
+		String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/" + game.getId() + "/statistics.json?api_key=" + key;
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -74,7 +74,7 @@ public class SeasonController extends Thread{
 	public List<Game> getGames(@PathVariable String weekNumber) {
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
-				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=2czvbmnr5ghwva9y8hbwh92w", Season.class);
+				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=" + key, Season.class);
 		System.out.println("received id field: " + season.getBody());
 		List<Week> weeks = season.getBody().getWeeks();
 		for (Week w: weeks) {
@@ -89,7 +89,7 @@ public class SeasonController extends Thread{
 	public List<Player> getRosterByWeek(@PathVariable String teamAlias, @PathVariable String weekNumber) {
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
-				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=2czvbmnr5ghwva9y8hbwh92w", Season.class);
+				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=" + key, Season.class);
 		System.out.println("received id field: " + season.getBody());
 		List<Week> weeks = season.getBody().getWeeks();
 		for (Week w: weeks) {
@@ -97,7 +97,7 @@ public class SeasonController extends Thread{
 				List<Game> games = w.getGames();
 				for (Game g : games) {
 					if (g.getHome().getAlias().equals(teamAlias) || g.getAway().getAlias().equals(teamAlias)) {
-						String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/"+ g.getId()+"/roster.json?api_key=2czvbmnr5ghwva9y8hbwh92w";
+						String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/"+ g.getId()+"/roster.json?api_key=" + key;
 						System.out.println(url);
 						try {
 							Thread.sleep(1000);

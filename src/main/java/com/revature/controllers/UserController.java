@@ -43,8 +43,8 @@ public class UserController {
 	
 	@Transactional
 	@GetMapping("/{id}/{teamName}")
-	public User newTeam(@PathVariable int id, @PathVariable String teamName) {
-		User u = us.updateUserTeams(id, teamName);
+	public User newTeam(@PathVariable int id, @RequestBody String[] teamNames) {
+		User u = us.updateUserTeams(id, teamNames);
 		return u;
 	}
 

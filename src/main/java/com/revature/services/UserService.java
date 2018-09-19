@@ -28,11 +28,13 @@ public class UserService {
 		return u;
 	}
 	
-	public User updateUserTeams(int id, String teamName) {
-		Team t = tr.findByName(teamName);
+	public User updateUserTeams(int id, String[] teamNames) {
 		User u = ur.getOne(id);
-		u.getTeams().add(t);
-		ur.saveAndFlush(u);
+		for (String team : teamNames) {
+			Team t = tr.findByName(team);
+			u.getTeams().add(t);
+			ur.saveAndFlush(u);
+		}
 		return u;
 	}
 	
