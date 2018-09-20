@@ -42,8 +42,9 @@ public class UserController {
 	}
 	
 	@Transactional
-	@GetMapping("/{id}/{teamName}")
+	@PostMapping("/{id}/updateTeams")
 	public User newTeam(@PathVariable int id, @RequestBody String[] teamNames) {
+		System.out.println(teamNames);
 		User u = us.updateUserTeams(id, teamNames);
 		return u;
 	}
