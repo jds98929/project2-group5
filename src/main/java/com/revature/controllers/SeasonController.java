@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,12 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.dto.Conferences;
 import com.revature.dto.Division;
+import com.revature.dto.Events;
 import com.revature.dto.Game;
+import com.revature.dto.GameFeed;
 import com.revature.dto.GameStats;
+import com.revature.dto.PBP;
+import com.revature.dto.Period;
 import com.revature.dto.Player;
 import com.revature.dto.Roster;
 import com.revature.dto.Schedule;
@@ -36,7 +41,6 @@ public class SeasonController extends Thread{
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
 				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=zf6ccbxz5rahzcafpvuy52uw", Season.class);
-		System.out.println("received id field: " + season.getBody());
 		
 		return season.getBody();
 	}
@@ -45,7 +49,6 @@ public class SeasonController extends Thread{
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<Season> season = rt.getForEntity
 				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=zf6ccbxz5rahzcafpvuy52uw", Season.class);
-		System.out.println("received id field: " + season.getBody());
 		List<Week> weeks = season.getBody().getWeeks();
 		for (Week w: weeks) {
 			if (w.getTitle().equals(weekNumber)) {
@@ -141,5 +144,23 @@ public class SeasonController extends Thread{
 			}
 		}
 		return null;
+	}
+	@GetMapping("{gameId}/plays")
+	public List<Period> getGamePlays(@PathVariable String gameId){
+		RestTemplate rt = new RestTemplate();
+		List<PBP> newPbp = new ArrayList<PBP>();
+		String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/" + gameId + "/pbp.json?api_key=zf6ccbxz5rahzcafpvuy52uw";
+		ResponseEntity<GameFeed> gameFeed = rt.getForEntity(url, GameFeed.class);
+		List<Period> periods = gameFeed.getBody().getPeriods();
+		for (Period period: periods) {
+			List<PBP> pbps = period.getPbp();
+			for(PBP pbp: pbps) {
+				if (pbp.getType().equals("drive")) {
+					newPbp.add(pbp);
+				}
+			}
+			period.setPbp(newPbp);
+		}
+		return periods;	
 	}
 }
