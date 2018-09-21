@@ -22,6 +22,7 @@ import com.revature.dto.GameStats;
 import com.revature.dto.PBP;
 import com.revature.dto.Period;
 import com.revature.dto.Player;
+import com.revature.dto.PlayerProfile;
 import com.revature.dto.Roster;
 import com.revature.dto.Schedule;
 import com.revature.dto.Season;
@@ -162,5 +163,13 @@ public class SeasonController extends Thread{
 			period.setPbp(newPbp);
 		}
 		return periods;	
+	}
+	@GetMapping("/player/{id}")
+	public PlayerProfile getPlayerPreviousTeams(@PathVariable String id){
+		RestTemplate rt = new RestTemplate();
+		ResponseEntity<PlayerProfile> playerProfile = rt.getForEntity
+				("https://api.sportradar.us/nfl/official/trial/v5/en/players/"+id+"/profile.json?api_key=nmcw4t28vwm8fhak2yng4rfh", PlayerProfile.class);
+		System.out.println("received id field: " + playerProfile.getBody());
+		return playerProfile.getBody();
 	}
 }
