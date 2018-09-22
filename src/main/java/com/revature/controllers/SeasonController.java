@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,15 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.dto.Conferences;
 import com.revature.dto.Division;
+import com.revature.dto.Events;
+import com.revature.dto.FeedDisplay;
 import com.revature.dto.Game;
+import com.revature.dto.GameFeed;
 import com.revature.dto.GameStats;
+import com.revature.dto.PBP;
+import com.revature.dto.Period;
 import com.revature.dto.Player;
+import com.revature.dto.PlayerProfile;
 import com.revature.dto.Roster;
 import com.revature.dto.Schedule;
 import com.revature.dto.Season;
@@ -27,9 +34,9 @@ import com.revature.services.SeasonService;
 @RestController
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RequestMapping("season")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://1808-teamspace.s3-website.us-east-2.amazonaws.com/")
 public class SeasonController extends Thread{
-	static String key = "mzgx958n3fyxn6nvpg82r5jb";
+	static String key = "am8qry98vbmghgdvxgcq3vp8";
 	@Autowired
 	private SeasonService us;
 	@GetMapping
@@ -47,6 +54,7 @@ public class SeasonController extends Thread{
 		ResponseEntity<Season> season = rt.getForEntity
 				("https://api.sportradar.us/nfl/official/trial/v5/en/games/2018/REG/schedule.json?api_key=" + key, Season.class);
 		System.out.println("received id field: " + season.getBody());
+
 		List<Week> weeks = season.getBody().getWeeks();
 		for (Week w: weeks) {
 			if (w.getTitle().equals(weekNumber)) {
@@ -133,9 +141,9 @@ public class SeasonController extends Thread{
 						RestTemplate restTemplate = new RestTemplate();
 						ResponseEntity<Roster> roster = restTemplate.getForEntity
 								(url, Roster.class);
-						List<Player> pl = (roster.getBody().getHome() == null) ? roster.getBody().getAway().getPlayers() : 
+						List<Player> pl = (!roster.getBody().getHome().getAlias().equals(teamAlias)) ? roster.getBody().getAway().getPlayers() : 
 							roster.getBody().getHome().getPlayers();
-				        System.out.println("Result : status ("+ roster.getStatusCode() + ") has body: " + roster.hasBody());	
+				        System.out.println("Result : status ("+ roster.getStatusCode() + ") has body: " + roster.hasBody());
 				        return pl; 
 						}catch(Exception e) {
 							System.out.println("Exception : "+ e);
@@ -146,5 +154,42 @@ public class SeasonController extends Thread{
 			}
 		}
 		return null;
+	}
+	@GetMapping("{gameId}/plays")
+	public List<String> getGamePlays(@PathVariable String gameId){
+		RestTemplate rt = new RestTemplate();
+		//List<FeedDisplay> fdList = new ArrayList<FeedDisplay>();
+		FeedDisplay fd = new FeedDisplay();
+		fd = new FeedDisplay();
+		List<String> descs = new ArrayList<String>();
+		String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/" + gameId + "/pbp.json?api_key=" + key;
+		ResponseEntity<GameFeed> gameFeed = rt.getForEntity(url, GameFeed.class);
+		List<Period> periods = gameFeed.getBody().getPeriods();
+		for (Period period: periods) {
+			fd.setClock(gameFeed.getBody().getClock());
+			fd.setQuarter(gameFeed.getBody().getQuarter());
+			fd.setSequence(period.getSequence());
+			fd.setNumber(period.getNumber());
+			List<PBP> pbps = period.getPbp();
+			for (PBP pbp: pbps) {
+				if (pbp.getType().equals("drive")) {
+					List<Events> events = pbp.getEvents();
+					for (Events event: events) {
+						fd.setId(event.getId());
+						fd.setDescription(event.getDescription() != null ? event.getDescription() : "N/A");
+						descs.add(event.getDescription() != null ? event.getDescription() : "N/A");
+					}
+				}
+			}
+		}
+		return descs;
+	}
+	@GetMapping("/player/{id}")
+	public PlayerProfile getPlayerPreviousTeams(@PathVariable String id){
+		RestTemplate rt = new RestTemplate();
+		ResponseEntity<PlayerProfile> playerProfile = rt.getForEntity
+				("https://api.sportradar.us/nfl/official/trial/v5/en/players/"+id+"/profile.json?api_key=nmcw4t28vwm8fhak2yng4rfh", PlayerProfile.class);
+		System.out.println("received id field: " + playerProfile.getBody());
+		return playerProfile.getBody();
 	}
 }
