@@ -19,7 +19,7 @@ import com.revature.dto.Credential;
 import com.revature.model.User;
 import com.revature.services.UserService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://1808-teamspace.s3-website.us-east-2.amazonaws.com/")
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -42,9 +42,10 @@ public class UserController {
 	}
 	
 	@Transactional
-	@GetMapping("/{id}/{teamName}")
-	public User newTeam(@PathVariable int id, @PathVariable String teamName) {
-		User u = us.updateUserTeams(id, teamName);
+	@PostMapping("/{id}/updateTeams")
+	public User newTeam(@PathVariable int id, @RequestBody String[] teamNames) {
+		System.out.println(teamNames);
+		User u = us.updateUserTeams(id, teamNames);
 		return u;
 	}
 
