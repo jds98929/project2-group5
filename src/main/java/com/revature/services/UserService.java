@@ -30,9 +30,12 @@ public class UserService {
 	
 	public User updateUserTeams(int id, String[] teamNames) {
 		User u = ur.getOne(id);
+		System.out.println("Starting with teams" + u.getTeams());
 		for (String team : teamNames) {
 			Team t = tr.findByName(team);
+			System.out.println("Next team" + t);
 			u.getTeams().add(t);
+			System.out.println("New teams" + u.getTeams());
 			ur.saveAndFlush(u);
 		}
 		return u;
