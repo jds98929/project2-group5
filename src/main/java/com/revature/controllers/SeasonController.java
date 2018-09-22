@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.dto.Conferences;
 import com.revature.dto.Division;
 import com.revature.dto.Events;
+import com.revature.dto.FeedDisplay;
 import com.revature.dto.Game;
 import com.revature.dto.GameFeed;
 import com.revature.dto.GameStats;
@@ -147,22 +148,33 @@ public class SeasonController extends Thread{
 		return null;
 	}
 	@GetMapping("{gameId}/plays")
-	public List<Period> getGamePlays(@PathVariable String gameId){
+	public List<String> getGamePlays(@PathVariable String gameId){
 		RestTemplate rt = new RestTemplate();
-		List<PBP> newPbp = new ArrayList<PBP>();
+		//List<FeedDisplay> fdList = new ArrayList<FeedDisplay>();
+		FeedDisplay fd = new FeedDisplay();
+		fd = new FeedDisplay();
+		List<String> descs = new ArrayList<String>();
 		String url = "https://api.sportradar.us/nfl/official/trial/v5/en/games/" + gameId + "/pbp.json?api_key=zf6ccbxz5rahzcafpvuy52uw";
 		ResponseEntity<GameFeed> gameFeed = rt.getForEntity(url, GameFeed.class);
 		List<Period> periods = gameFeed.getBody().getPeriods();
 		for (Period period: periods) {
+			fd.setClock(gameFeed.getBody().getClock());
+			fd.setQuarter(gameFeed.getBody().getQuarter());
+			fd.setSequence(period.getSequence());
+			fd.setNumber(period.getNumber());
 			List<PBP> pbps = period.getPbp();
-			for(PBP pbp: pbps) {
+			for (PBP pbp: pbps) {
 				if (pbp.getType().equals("drive")) {
-					newPbp.add(pbp);
+					List<Events> events = pbp.getEvents();
+					for (Events event: events) {
+						fd.setId(event.getId());
+						fd.setDescription(event.getDescription() != null ? event.getDescription() : "N/A");
+						descs.add(event.getDescription() != null ? event.getDescription() : "N/A");
+					}
 				}
 			}
-			period.setPbp(newPbp);
 		}
-		return periods;	
+		return descs;
 	}
 	@GetMapping("/player/{id}")
 	public PlayerProfile getPlayerPreviousTeams(@PathVariable String id){
