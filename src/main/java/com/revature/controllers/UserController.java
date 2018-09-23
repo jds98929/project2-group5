@@ -19,7 +19,7 @@ import com.revature.dto.Credential;
 import com.revature.model.User;
 import com.revature.services.UserService;
 
-@CrossOrigin(origins = "http://1808-teamspace.s3-website.us-east-2.amazonaws.com/")
+@CrossOrigin(origins = "http://1808-teamspace.s3-website.us-east-2.amazonaws.com")
 @RestController
 @RequestMapping("users")
 public class UserController {
