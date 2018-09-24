@@ -184,7 +184,11 @@ public class SeasonController extends Thread{
 				}
 			}
 		}
-		return descs;
+		List<String> descs2 = new ArrayList<String>();
+		for (int i = descs.size() - 1; i >= 0; i--) {
+			descs2.add(descs.get(i)); 
+		}
+		return descs2;
 	}
 	@GetMapping("/player/{id}")
 	public PlayerProfile getPlayerPreviousTeams(@PathVariable String id){

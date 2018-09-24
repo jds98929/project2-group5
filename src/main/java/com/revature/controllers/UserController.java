@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.dto.Credential;
 import com.revature.model.User;
 import com.revature.services.UserService;
 
 @CrossOrigin(origins = {"http://1808-teamspace.s3-website.us-east-2.amazonaws.com",  "http://localhost:3000"})
 @RestController
+@JsonIgnoreProperties(ignoreUnknown = true)
 @RequestMapping("users")
 public class UserController {
 
@@ -51,7 +53,9 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody User u) {
+		System.out.println("User is " + u);
 		ResponseEntity<User> re = new ResponseEntity<User>(u, HttpStatus.CREATED);
+		us.saveUser(u);
 		return re;
 	}
 
