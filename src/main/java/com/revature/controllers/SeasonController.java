@@ -36,7 +36,7 @@ import com.revature.services.SeasonService;
 @RequestMapping("season")
 @CrossOrigin(origins = {"http://1808-teamspace.s3-website.us-east-2.amazonaws.com", "http://localhost:3000"})
 public class SeasonController extends Thread{
-	static String key = "am8qry98vbmghgdvxgcq3vp8";
+	static String key = "vucqf2v7bvknmqsjyb927d3w";
 	@Autowired
 	private SeasonService us;
 	@GetMapping
